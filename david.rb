@@ -4,14 +4,7 @@ $:<< '../lib' << 'lib'
 require 'goliath'
 require 'goliath/rack/templates'
 
-# class NewURL < Goliath::API
-#   def response (env)
-#     [200, {}, haml(:new_url)]
-#   end
-# end
-
 class David < Goliath::API
-  include Goliath::Rack::Templates
   
   def response (env)
     if params[:id]
@@ -23,10 +16,18 @@ class David < Goliath::API
     
 end
 
+class NewURL < Goliath::API
+  include Goliath::Rack::Templates
+
+  def response (env)
+    [200, {}, haml(:new_url)]
+  end
+end
+
 class RackRoutes < Goliath::API
 
   map '/new' do
-    run David.NewURL.new
+    run NewURL.new
   end
 
   map '/:id' do
