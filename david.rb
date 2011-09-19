@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
-
 require 'goliath'
 require 'goliath/rack/templates'
+
+require_relative 'config/routes'
 
 require 'redis'
 
@@ -17,7 +18,7 @@ class David < Goliath::API
       url = redis.get params[:id]
       [200, {}, "Will redirect to: #{url}"]
     else
-      [404, {}, "Not found"]
+      [404, {"Content-Type" => "text/html"}, "Not found"]
     end
   end
     
@@ -27,18 +28,6 @@ class NewURL < Goliath::API
   include Goliath::Rack::Templates
 
   def response (env)
-    [200, {}, haml(:new_url)]
+    [200, {"Content-Type" => "text/html"}, haml(:new_url)]
   end
-end
-
-class RackRoutes < Goliath::API
-
-  map '/new' do
-    run NewURL.new
-  end
-
-  map '/:id' do
-    run David.new
-  end
-
 end
