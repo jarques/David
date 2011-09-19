@@ -17,7 +17,7 @@ class David < Goliath::API
       url = redis.get params[:id]
       [200, {}, "Will redirect to: #{url}"]
     else
-      [200, {}, "Not found"]
+      [404, {}, "Not found"]
     end
   end
     
