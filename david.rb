@@ -1,26 +1,27 @@
-#!/usr/bin/env ruby
-
+require 'rubygems'
 require 'goliath'
 require 'goliath/rack/templates'
 
 require 'redis'
+require 'net/http'
+require "uri"
 
 class David < Goliath::API
-  
+
   def response (env)
-
-    redis = Redis.new
-    # If you're running redis with a different port or IP, use the following:
-    # redis = Redis.new(:host => "10.0.1.1", :port => 6380) 
-
     if params[:id]
-      url = redis.get params[:id]
-      [200, {}, "Will redirect to: #{url}"]
+      fetch(params[:id])
     else
-      [404, {"Content-Type" => "text/html"}, "Not found"]
+      [200, {}, "Set"]
     end
   end
-    
+
+  def fetch (id)
+    redis = Redis.new
+    url = redis.get id
+    [200, {}, url]
+  end
+
 end
 
 class NewURL < Goliath::API
@@ -39,10 +40,6 @@ class RackRoutes < Goliath::API
 
   map '/:id' do
     run David.new
-  end
-
-  map '/new-url' do 
-    run AddUrl.new
   end
 
 end
