@@ -3,7 +3,7 @@ David is still in its very early stage, but you can start playing around with it
 
 To start david, simply run: ruby david.rb -sv
 
-Install ruby 1.9.2
+To get Goliath up and running, install ruby 1.9.2
 
 <pre>
 $> gem install rvm
@@ -15,4 +15,10 @@ Install Goliath
 
 <pre>
 $> gem install goliath
+</pre>
+
+David requires the redis gem and server.
+
+<pre>
+$> gem install redis
 </pre>

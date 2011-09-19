@@ -1,16 +1,23 @@
 #!/usr/bin/env ruby
-$:<< '../lib' << 'lib'
 
 require 'goliath'
 require 'goliath/rack/templates'
 
+require 'redis'
+
 class David < Goliath::API
   
   def response (env)
+
+    redis = Redis.new
+    # If you're running redis with a different port or IP, use the following:
+    # redis = Redis.new(:host => "10.0.1.1", :port => 6380) 
+
     if params[:id]
-      [200, {}, "Will redirect to: #{params[:id]}"]
+      url = redis.get params[:id]
+      [200, {}, "Will redirect to: #{url}"]
     else
-      [404, {}, "Not found"]
+      [200, {}, "Not found"]
     end
   end
     
