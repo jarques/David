@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
+
 require 'goliath'
 require 'goliath/rack/templates'
-
-require_relative 'config/routes'
 
 require 'redis'
 
@@ -30,4 +29,20 @@ class NewURL < Goliath::API
   def response (env)
     [200, {"Content-Type" => "text/html"}, haml(:new_url)]
   end
+end
+
+class RackRoutes < Goliath::API
+
+  map '/new' do
+    run NewURL.new
+  end
+
+  map '/:id' do
+    run David.new
+  end
+
+  map '/new-url' do 
+    run AddUrl.new
+  end
+
 end

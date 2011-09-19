@@ -10,3 +10,8 @@
 
   %body{ :lang => 'en' }
     %h4 Create new URL:
+
+    %form{:type => "POST", :action => "/new-url"}
+      %label{:for => "url"}
+      %input{:name => "url"}
+      %input{:type => "submit"}
