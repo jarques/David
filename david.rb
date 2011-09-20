@@ -19,7 +19,11 @@ class David < Goliath::API
   def fetch (id)
     redis = Redis.new
     url = redis.get id
-    [200, {}, url]
+    if url
+      [301, {"Content-Type" => "text/html"}, "<script type='text/javascript'>window.location = \"#{url}\"</script>"]
+    else
+      [404, {}, "URL not found. Sorry."]
+    end
   end
 
 end
