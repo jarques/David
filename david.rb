@@ -1,10 +1,7 @@
-require 'rubygems'
 require 'goliath'
 require 'goliath/rack/templates'
 
 require 'redis'
-require 'net/http'
-require "uri"
 
 class David < Goliath::API
 
