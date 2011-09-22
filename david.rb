@@ -17,9 +17,12 @@ class David < Goliath::API
     redis = Redis.new
     url = redis.get id
     if url
-      [301, {"Content-Type" => "text/html"}, "<script type='text/javascript'>window.location = \"#{url}\"</script>"]
+      #[301, {"Content-Type" => "text/html"}, "<script type='text/javascript'>window.location = \"#{url}\"</script>"]
+      response.sendRedirect(url);
     else
-      [404, {}, "URL not found. Sorry."]
+      url = "http://google.com/"
+      response.redirect(url);
+      #[404, {}, "URL not found. Sorry."]
     end
   end
 
